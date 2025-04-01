@@ -6,6 +6,14 @@ const db = require("./src/db");
 let mainWindow;
 let cachedProducts = null; // For product list caching
 
+ipcMain.on("focus-fix", (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (win) {
+    win.blur(); // First remove focus
+    win.focus(); // Then force focus back
+  }
+});
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -79,6 +87,8 @@ app.whenReady().then(() => {
         (sum, p) => sum + p.calculated_profit,
         0
       );
+
+      console.log(products);
 
       return {
         totalProfit,

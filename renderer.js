@@ -64,7 +64,7 @@ document.getElementById("productForm").addEventListener("submit", async (e) => {
     productModal.style.display = "none";
   } catch (err) {
     console.error("Error saving product:", err);
-    alert("Error saving product");
+    await window.inventoryAPI.alert("Error saving product");
   }
 });
 
@@ -88,7 +88,7 @@ document.getElementById("stockForm").addEventListener("submit", async (e) => {
     stockModal.style.display = "none";
   } catch (err) {
     console.error("Error adding stock:", err);
-    alert("Error adding stock");
+    await window.inventoryAPI.alert("Error adding stock");
   }
 });
 
@@ -99,15 +99,22 @@ document.getElementById("sellForm").addEventListener("submit", async (e) => {
   const sellData = {
     productId: parseInt(document.getElementById("sellProductId").value),
     quantity: parseInt(document.getElementById("sellQuantity").value),
+    discountedPrice: parseFloat(
+      document.getElementById("discountedPrice").value
+    ),
   };
 
   try {
-    await window.inventoryAPI.sellStock(sellData.productId, sellData.quantity);
+    await window.inventoryAPI.sellStock(
+      sellData.productId,
+      sellData.quantity,
+      sellData.discountedPrice
+    );
     loadProducts();
     sellModal.style.display = "none";
   } catch (err) {
     console.error("Error selling product:", err);
-    alert(err.message);
+    await window.inventoryAPI.alert(err.message);
   }
 });
 
@@ -154,44 +161,6 @@ async function loadProducts() {
       productListBody.appendChild(row);
     });
 
-    /*
-    // Add event listeners to action buttons
-    document.querySelectorAll(".stock-btn").forEach((btn) => {
-      console.log(btn);
-      btn.addEventListener("click", (e) => {
-        const productId = parseInt(e.target.getAttribute("data-id"));
-        console.log(productId);
-        document.getElementById("stockProductId").value = productId;
-        document.getElementById("stockForm").reset();
-        stockModal.style.display = "block";
-      });
-    });
-
-    document.querySelectorAll(".sell-btn").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const productId = parseInt(e.target.getAttribute("data-id"));
-        document.getElementById("sellProductId").value = productId;
-        document.getElementById("sellForm").reset();
-        sellModal.style.display = "block";
-      });
-    });
-
-    document.querySelectorAll(".delete-btn").forEach((btn) => {
-      btn.addEventListener("click", async (e) => {
-        const productId = parseInt(e.target.getAttribute("data-id"));
-        console.log(productId);
-        if (confirm("Are you sure you want to delete this product?")) {
-          try {
-            await window.inventoryAPI.deleteProduct(productId);
-            loadProducts();
-          } catch (err) {
-            console.error("Error deleting product:", err);
-            alert("Error deleting product");
-          }
-        }
-      });
-    });
-    */
     productListBody.addEventListener("click", async (e) => {
       const stockBtn = e.target.closest(".stock-btn");
       const sellBtn = e.target.closest(".sell-btn");
@@ -213,20 +182,23 @@ async function loadProducts() {
 
       if (deleteBtn) {
         const productId = parseInt(deleteBtn.getAttribute("data-id"));
-        if (confirm("Are you sure you want to delete this product?")) {
+        const conf = await window.inventoryAPI.confirm(
+          "Are you sure you want to delete this product?"
+        );
+        if (conf) {
           try {
             await window.inventoryAPI.deleteProduct(productId);
             loadProducts();
           } catch (err) {
             console.error("Error deleting product:", err);
-            alert("Error deleting product");
+            await window.inventoryAPI.alert("Error deleting product");
           }
         }
       }
     });
   } catch (err) {
     console.error("Error loading products:", err);
-    alert("Error loading products");
+    await window.inventoryAPI.alert("Error loading products");
   }
 }
 
@@ -247,7 +219,6 @@ async function loadStatistics() {
           <th>Product</th>
           <th>Sold</th>
           <th>Avg Buy</th>
-          <th>Avg Sell</th>
           <th>Profit</th>
         </tr>
       </thead>

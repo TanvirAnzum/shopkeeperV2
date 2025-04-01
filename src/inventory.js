@@ -166,7 +166,7 @@ const inventory = {
   },
 
   // Sell product
-  sellStock(productId, quantity, discountedPrice) {
+  sellStock(productId, quantity, discountedPrice = 0) {
     const product = db
       .prepare("SELECT * FROM products WHERE id = ?")
       .get(productId);
