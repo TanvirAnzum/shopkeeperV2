@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory System</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <h1>Shop Inventory</h1>
+        <button id="addProductBtn" class="btn add-btn">+ Add Product</button>
+      </header>
+
+      <nav class="app-nav">
+        <button id="dashboardBtn" class="nav-btn active">Dashboard</button>
+        <button id="statsBtn" class="nav-btn">Statistics</button>
+        <button id="logsBtn" class="nav-btn">Logs</button>
+      </nav>
+
+      <div id="dashboardPage" class="page">
+        <table id="productTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Stock</th>
+              <th>Buy Price</th>
+              <th>Sell Price</th>
+              <th>Profit Today</th>
+              <th>Sold Today</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productListBody">
+            <!-- Products will load here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Statistics Page (initially hidden) -->
+      <div id="statsPage" class="page">
+        <h2>Profit Analytics</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Total Profit</h3>
+            <p id="totalProfit">$0.00</p>
+          </div>
+          <!-- Add more stat cards similarly -->
+        </div>
+        <div class="product-stats">
+          <table id="productStatsTable">
+            <!-- Product-wise stats will load here -->
+          </table>
+        </div>
+      </div>
+
+      <!-- Logs Page (initially hidden) -->
+      <div id="logsPage" class="page">
+        <h2>Activity Logs</h2>
+        <div class="log-controls">
+          <input type="date" id="logDateFilter" />
+          <button id="todayLogsBtn">Today</button>
+          <button id="allLogsBtn">All Logs</button>
+        </div>
+        <table id="logsTable">
+          <!-- Logs will load here -->
+        </table>
+      </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalTitle">Add New Product</h2>
+        <form id="productForm">
+          <input type="hidden" id="productId" />
+
+          <div class="form-group">
+            <label for="name">Product Name*</label>
+            <input type="text" id="name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="quantity">Quantity*</label>
+            <input type="number" id="quantity" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="buyingPrice">Buy Price*</label>
+              <input
+                type="number"
+                id="buyingPrice"
+                step="0.01"
+                required
+                min="0"
+              />
+            </div>
+            <div class="form-group">
+              <label for="sellingPrice">Sell Price*</label>
+              <input
+                type="number"
+                id="sellingPrice"
+                step="0.01"
+                required
+                min="0"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="remarks">Remarks</label>
+            <input type="text" id="remarks" />
+          </div>
+
+          <button type="submit" class="btn submit-btn">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Stock Modal -->
+    <div id="stockModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Add Stock</h2>
+        <form id="stockForm">
+          <input type="hidden" id="stockProductId" />
+
+          <div class="form-group">
+            <label for="addQuantity">Quantity</label>
+            <input type="number" id="addQuantity" required min="1" />
+          </div>
+
+          <div class="form-group">
+            <label for="addPrice">Price Per Unit</label>
+            <input type="number" id="addPrice" step="0.01" required min="0" />
+          </div>
+
+          <button type="submit" class="btn submit-btn">Add Stock</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Sell Modal -->
+    <div id="sellModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Sell Product</h2>
+        <form id="sellForm">
+          <input type="hidden" id="sellProductId" />
+
+          <div class="form-group">
+            <label for="sellQuantity">Quantity</label>
+            <input type="number" id="sellQuantity" required min="1" />
+          </div>
+
+          <button type="submit" class="btn submit-btn">Confirm Sale</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>

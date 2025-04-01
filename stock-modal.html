@@ -1,0 +1,51 @@
+<div
+  id="stockModal"
+  class="modal hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center"
+>
+  <div class="bg-white rounded-lg shadow-xl w-96">
+    <div class="p-6">
+      <h2 class="text-xl font-semibold mb-4">Add Stock</h2>
+      <form id="stockForm">
+        <input type="hidden" id="stockProductId" />
+
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="addQuantity"
+          >
+            Quantity to Add
+          </label>
+          <input
+            class="w-full px-3 py-2 border rounded"
+            id="addQuantity"
+            type="number"
+            min="1"
+            required
+          />
+        </div>
+
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="addPrice"
+          >
+            Purchase Price (per unit)
+          </label>
+          <input
+            class="w-full px-3 py-2 border rounded"
+            id="addPrice"
+            type="number"
+            step="0.01"
+            min="0"
+            required
+          />
+        </div>
+
+        <div class="flex justify-end">
+          <button type="button" class="btn-cancel mr-2">Cancel</button>
+          <button type="submit" class="btn-primary">Add Stock</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

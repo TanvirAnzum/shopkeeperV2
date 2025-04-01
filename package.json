@@ -1,0 +1,26 @@
+{
+  "name": "storekeeperv2",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "dev": "nodemon --watch main.js --watch preload.js --watch src/ --exec electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "Tanvir Anzum",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "electron": "^35.1.2",
+    "electron-builder": "^26.0.12",
+    "electron-rebuild": "^3.2.9",
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.9.1",
+    "heroicons": "^2.2.0",
+    "tailwindcss": "^4.0.17"
+  }
+}
