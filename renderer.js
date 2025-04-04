@@ -8,6 +8,7 @@ const closeButtons = document.querySelectorAll(".close");
 
 // Current product being edited
 let currentProduct = null;
+let isProcessing = false;
 
 // Load products when page loads
 document.addEventListener("DOMContentLoaded", loadProducts);
@@ -60,6 +61,7 @@ document.getElementById("productForm").addEventListener("submit", async (e) => {
 
   try {
     await window.inventoryAPI.upsertProduct(productData);
+    window.location.reload();
     loadProducts();
     productModal.style.display = "none";
   } catch (err) {
@@ -84,6 +86,7 @@ document.getElementById("stockForm").addEventListener("submit", async (e) => {
       stockData.quantity,
       stockData.price
     );
+    window.location.reload();
     loadProducts();
     stockModal.style.display = "none";
   } catch (err) {
@@ -110,6 +113,7 @@ document.getElementById("sellForm").addEventListener("submit", async (e) => {
       sellData.quantity,
       sellData.discountedPrice
     );
+    window.location.reload();
     loadProducts();
     sellModal.style.display = "none";
   } catch (err) {
@@ -129,14 +133,11 @@ async function loadProducts() {
         '<tr><td colspan="7" style="text-align: center;">No products found</td></tr>';
       return;
     }
-
     products.forEach(async (product) => {
       const row = document.createElement("tr");
-      console.log(product);
       const todaysProduct = await window.inventoryAPI.getTodaysProduct(
         product.id
       );
-      console.log(todaysProduct);
 
       row.innerHTML = `
                 <td>${product.name}</td>
@@ -188,6 +189,7 @@ async function loadProducts() {
         if (conf) {
           try {
             await window.inventoryAPI.deleteProduct(productId);
+            window.location.reload();
             loadProducts();
           } catch (err) {
             console.error("Error deleting product:", err);
@@ -322,3 +324,24 @@ function switchPage(pageName) {
   });
   document.getElementById(`${pageName}Btn`).classList.add("active");
 }
+
+/* toggle */
+document.querySelectorAll('input[name="statsView"]').forEach((radio) => {
+  radio.addEventListener("change", function () {
+    const productTable = document.getElementById("productStatsTable");
+    const dayTable = document.getElementById("dayStatsTable");
+
+    if (this.value === "product") {
+      productTable.classList.remove("hidden");
+      productTable.classList.add("active");
+      dayTable.classList.remove("active");
+      dayTable.classList.add("hidden");
+    } else {
+      productTable.classList.remove("active");
+      productTable.classList.add("hidden");
+      dayTable.classList.remove("hidden");
+      dayTable.classList.add("active");
+      // Optional: Fetch day-wise data here
+    }
+  });
+});

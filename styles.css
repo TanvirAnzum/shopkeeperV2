@@ -236,3 +236,64 @@ input[type="number"] {
 .page.active {
   display: block;
 }
+
+/* toggle */
+/* Radio Button Toggle Styling */
+.view-toggle {
+  margin-bottom: 20px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 16px;
+  background: #f5f5f5;
+  padding: 8px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.radio-group input[type="radio"] {
+  display: none; /* Hide default radio */
+}
+
+.radio-group label {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #555;
+}
+
+.radio-group input[type="radio"]:checked + label {
+  background: #4caf50; /* Green background for active */
+  color: white;
+}
+
+/* Table Styling */
+.stats-tables table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.stats-tables th,
+.stats-tables td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.stats-tables th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+/* Table Visibility */
+.hidden {
+  display: none;
+}
+
+.active {
+  display: table;
+}

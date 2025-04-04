@@ -12,6 +12,7 @@ const customAlert = (message) => {
 };
 
 const customConfirm = (message) => {
+  console.log("Custom confirm called with message:", message);
   const result = originalConfirm(message);
   ipcRenderer.send("focus-fix");
   return result;

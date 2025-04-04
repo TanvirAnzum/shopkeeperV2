@@ -76,17 +76,13 @@ app.whenReady().then(() => {
       const products = db
         .prepare(
           `
-        SELECT *, 
-        (selling_price - buying_price) * total_sold AS calculated_profit 
+        SELECT *
         FROM products
       `
         )
         .all();
 
-      const totalProfit = products.reduce(
-        (sum, p) => sum + p.calculated_profit,
-        0
-      );
+      const totalProfit = products.reduce((sum, p) => sum + p.net_profit, 0);
 
       console.log(products);
 
@@ -95,9 +91,9 @@ app.whenReady().then(() => {
         products: products.map((p) => ({
           name: p.name,
           total_sold: p.total_sold,
-          avg_buying_price: p.cost_price, // Using cost_price directly
+          avg_buying_price: p.avg_buying_price, // Using cost_price directly
           avg_selling_price: p.selling_price,
-          net_profit: p.calculated_profit, // Using dynamically calculated profit
+          net_profit: p.net_profit, // Using dynamically calculated profit
         })),
       };
     } catch (error) {

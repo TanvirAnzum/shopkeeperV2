@@ -24,6 +24,7 @@ const inventory = {
       .get(name);
 
     if (existing) {
+      console.log(product);
       // Update existing product
       const stmt = db.prepare(`
         UPDATE products 
@@ -32,7 +33,7 @@ const inventory = {
           buying_price = ?,
           selling_price = ?,
           discounted_price = ?,
-          avg_bying_price = ?,
+          avg_buying_price = ?,
           remark = ?,
           last_updated = CURRENT_TIMESTAMP
         WHERE id = ?
@@ -42,8 +43,8 @@ const inventory = {
         buying_price,
         selling_price,
         discounted_price,
-        remark,
         avg_buying_price,
+        remark,
         existing.id
       );
 

@@ -40,17 +40,43 @@
 
       <!-- Statistics Page (initially hidden) -->
       <div id="statsPage" class="page">
-        <h2>Profit Analytics</h2>
+        <div class="stats-header">
+          <h2>Profit Analytics</h2>
+          <div class="view-toggle">
+            <div class="radio-group">
+              <input type="radio" id="productView" name="statsView" value="product" checked>
+              <label for="productView">Product-wise</label>
+              
+              <input type="radio" id="dayView" name="statsView" value="day">
+              <label for="dayView">Day-wise</label>
+            </div>
+          </div>
+        </div>
+      
         <div class="stats-grid">
           <div class="stat-card">
             <h3>Total Profit</h3>
             <p id="totalProfit">$0.00</p>
           </div>
-          <!-- Add more stat cards similarly -->
+          <!-- Add more stat cards here -->
         </div>
+      
+        <div class="stats-tables">
+          <table id="productStatsTable" class="active">
+            <!-- Product-wise stats (default) -->
+          </table>
+          <table id="dayStatsTable" class="hidden">
+            <!-- Day-wise stats (hidden initially) -->
+          </table>
+        </div>
+      </div>
+
         <div class="product-stats">
           <table id="productStatsTable">
-            <!-- Product-wise stats will load here -->
+            <!-- Product-wise stats (default) -->
+          </table>
+          <table id="dayStatsTable" class="hidden">
+            <!-- Day-wise stats (hidden initially) -->
           </table>
         </div>
       </div>
